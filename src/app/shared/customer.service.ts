@@ -9,6 +9,7 @@ export class CustomerService {
 
   constructor(private firebase: AngularFireDatabase) { }
   customerList: AngularFireList<any>;
+
     form  = new FormGroup({
     $key: new FormControl(null),
     fullName: new FormControl('', Validators.required),
@@ -20,5 +21,16 @@ export class CustomerService {
 
       getCustomer() {
         this.customerList = this.firebase.list('customers');
+        return this.customerList.snapshotChanges();
+      }
+
+      insertCustomer(customer) {
+        this.customerList.push({
+          fullName: customer.fullName,
+          email: customer.email,
+          mobile: customer.mobile,
+          location: customer.location
+        });
+
       }
 }
