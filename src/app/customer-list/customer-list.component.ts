@@ -9,9 +9,18 @@ import { CustomerService } from '../shared/customer.service';
 export class CustomerListComponent implements OnInit {
 
   constructor(private customerService: CustomerService) { }
+  customerArray = [];
 
   ngOnInit() {
-    this.customerService.getCustomer();
+    this.customerService.getCustomer().subscribe(
+      list => {
+        this.customerArray = list.map(item => {
+          return {
+            $key: item.key,
+            ...item.payload.val()
+          };
+        });
+      });
   }
 
 }
