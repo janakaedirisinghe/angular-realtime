@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import {FormControl, FormGroup , Validators} from '@angular/forms';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
 
-  constructor() { }
+  constructor(private firebase: AngularFireDatabase) { }
+  customerList: AngularFireList<any>;
     form  = new FormGroup({
     $key: new FormControl(null),
     fullName: new FormControl('', Validators.required),
@@ -15,4 +17,8 @@ export class CustomerService {
     location: new FormControl('')
 
   });
+
+      getCustomer() {
+        this.customerList = this.firebase.list('customers');
+      }
 }
