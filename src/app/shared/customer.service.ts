@@ -47,4 +47,8 @@ export class CustomerService {
           });
 
       }
+
+      deleteCustomer($key: string){
+        this.customerList.remove($key);
+      }
 }
